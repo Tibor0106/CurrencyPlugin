@@ -1,0 +1,4 @@
+name: CurrencyPlugin
+version: '${project.version}'
+main: hu.tibor.CurrencyPlugin
+api-version: 1.20
