@@ -1,4 +1,4 @@
-package hu.tibor.Utils.Currency;
+package hu.tibor.Currency;
 
 import org.bukkit.entity.Player;
 
