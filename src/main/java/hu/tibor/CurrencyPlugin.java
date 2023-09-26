@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CurrencyPlugin extends JavaPlugin {
     private Utils utils;
-    private Currency currency;
+    private static Currency currency;
 
     @Override
     public void onEnable() {
@@ -21,9 +21,8 @@ public final class CurrencyPlugin extends JavaPlugin {
     }
     @Override
     public void onDisable() {
-
     }
-    public Currency getCurrency(){
+    public static Currency getCurrency(){
         return  currency;
     }
 }

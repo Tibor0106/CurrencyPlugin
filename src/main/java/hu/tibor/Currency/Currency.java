@@ -9,24 +9,25 @@ public class Currency implements ICurrency{
         this.plugin = plugin;
     }
 
-    @Override
-    public void DepositPlayer(Player player, double amount) {
 
+    @Override
+    public boolean DepositPlayer(Player player, double amount) {
+        return false;
     }
 
     @Override
-    public void WithdrawPlayer(Player player, double amount) {
-
+    public boolean WithdrawPlayer(Player player, double amount) {
+        return false;
     }
 
     @Override
-    public void DepositPlayer(String playerName, double amount) {
-
+    public boolean DepositPlayer(String playerName, double amount) {
+        return false;
     }
 
     @Override
-    public void WithdrawPlayer(String playerName, double amount) {
-
+    public boolean WithdrawPlayer(String playerName, double amount) {
+        return false;
     }
 
     @Override

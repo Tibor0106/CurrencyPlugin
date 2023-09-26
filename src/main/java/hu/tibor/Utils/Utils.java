@@ -9,11 +9,17 @@ public class Utils {
     //Class's constructor
     public Utils(Plugin pl){
         this.plugin = pl;
+        getPrefix();
+        getCurrencyName();
     }
     private  Plugin plugin;
-    public String CHAT_PREFIX;
+    public static String CHAT_PREFIX;
+    public static String CurrencyName;
 
-    private  void getPrefix(){
+    private void getPrefix(){
         this.CHAT_PREFIX = plugin.getConfig().getString("ChatPrefix").replace("&", "§");
+    }
+    private void getCurrencyName(){
+        this.CurrencyName  = plugin.getConfig().getString("CurrencyName");
     }
 }
