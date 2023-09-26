@@ -1,5 +1,6 @@
 package hu.tibor;
 
+import hu.tibor.Commands.CCurrency_player;
 import hu.tibor.Currency.Currency;
 import hu.tibor.Utils.Utils;
 import org.bukkit.Bukkit;
@@ -18,6 +19,9 @@ public final class CurrencyPlugin extends JavaPlugin {
         //
         utils = new Utils(this);
         currency = new Currency(this);
+
+        //commands
+        getServer().getPluginCommand("currency-player").setExecutor(new CCurrency_player());
     }
     @Override
     public void onDisable() {

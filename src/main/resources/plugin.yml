@@ -2,7 +2,6 @@ name: CurrencyPlugin
 version: 1.0
 main: hu.tibor.CurrencyPlugin
 author: PTibor
-api-version: 1.20
 commands:
   currency:
     permission: currencycore.command.currency

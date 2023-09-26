@@ -29,7 +29,7 @@ public class CCurrency_player implements CommandExecutor {
                 return false;
             }
             //player is validated here
-            sender.sendMessage(Utils.CHAT_PREFIX+"§e"+args[1]+"'s balance §b"+ CurrencyPlugin.getCurrency().getBalance(target)+" §b"+Utils.CurrencyName);
+            sender.sendMessage(Utils.CHAT_PREFIX+" §e"+args[1]+"'s balance §b"+(int) CurrencyPlugin.getCurrency().getBalance(target)+" §b"+Utils.CurrencyName);
 
         }
         return false;
