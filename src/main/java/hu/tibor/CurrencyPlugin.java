@@ -1,7 +1,6 @@
 package hu.tibor;
 
 import hu.tibor.Commands.CCurrency_player;
-import hu.tibor.Currency.Currency;
 import hu.tibor.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
