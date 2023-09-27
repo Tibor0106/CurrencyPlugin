@@ -1,2 +1,10 @@
 ChatPrefix: "§8( §c§lCurrency §8) §f»"
 CurrencyName: "Kredit"
+
+##mysql
+username: "root"
+password: "tibor@200616"
+host: 127.0.0.1
+port: 3306
+database: minecraft
+
