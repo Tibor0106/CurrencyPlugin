@@ -2,6 +2,7 @@ package hu.tibor;
 
 import hu.tibor.Commands.CCurrency_player;
 import hu.tibor.Listeners.PlayerJoin;
+import hu.tibor.MySql.DataTables;
 import hu.tibor.MySql.Database;
 import hu.tibor.MySql.MySql;
 import hu.tibor.Utils.Utils;
@@ -27,6 +28,7 @@ public final class CurrencyPlugin extends JavaPlugin {
         //
         utils = new Utils(this);
         mySql = new MySql(this, true);
+        DataTables dataTables = new DataTables();
 
         //commands
         getServer().getPluginCommand("currency-player").setExecutor(new CCurrency_player());

@@ -19,7 +19,7 @@ public class DataTables {
     public void userTable(){
         try {
             statement = connection.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS currency (`playerUUID` text NOT NULL, `playerName` text NOT NULL, ´currency´ double NOT NULL);";
+            String sql = "CREATE TABLE IF NOT EXISTS currency (`playerUUID` text NOT NULL, `playerName` text NOT NULL, `currency` double NOT NULL);";
             statement.execute(sql);
             statement.close();
         } catch (SQLException e) {
