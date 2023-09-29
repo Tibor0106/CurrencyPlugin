@@ -8,10 +8,12 @@ import org.bukkit.plugin.Plugin;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class MySql implements ICurrency{
     private boolean isEnabled;
     private Connection connection;
+    private Database database;
     private Plugin plugin;
     public MySql(Plugin plugin, boolean enable){
         this.plugin = plugin;
@@ -22,6 +24,7 @@ public class MySql implements ICurrency{
         Database database = new Database(plugin);
         if(database.Connect()){
             Bukkit.getLogger().info(plugin.getName()+" §aDatabase connected!");
+            connection = database.getConnection();
         } else {
             Bukkit.getLogger().severe(plugin.getName()+" §cError while connecting database!");
         }
@@ -57,31 +60,25 @@ public class MySql implements ICurrency{
         return 0;
     }
 
-}
-class Database {
-    public String host;
-    public int port;
-    public String database;
-    public String username;
-    public String password;
-    public static Connection connection;
-
-    public Database(Plugin pl){
-        this.host = pl.getConfig().getString("host");
-        this.port =  pl.getConfig().getInt("port");
-        this.database =  pl.getConfig().getString("database");
-        this.username =  pl.getConfig().getString("username");
-        this.password =  pl.getConfig().getString("password");
-    }
-    public boolean Connect(){
-        String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            return true;
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public boolean playerExits(UUID uuid) {
         return false;
     }
+
+    @Override
+    public boolean playerExits(String uuid) {
+        return false;
+    }
+
+    @Override
+    public boolean playerExits(Player player) {
+        return false;
+    }
+
+    @Override
+    public Connection getConnetion() {
+        return connection;
+    }
+
+
 }
