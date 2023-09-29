@@ -5,10 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.UUID;
 
 public class MySql implements ICurrency{
@@ -50,6 +47,18 @@ public class MySql implements ICurrency{
 
     @Override
     public boolean DepositPlayer(String playerName, double amount) {
+        if(!playerExits(playerName)){
+            return false;
+        }
+        try{
+            statement = connection.createStatement();
+            String sql = "UPDATE currency SEt currency = "+amount+" WHERE playerName like '"+playerName+"'";
+            if(statement.executeUpdate(sql) == 1){
+                return true;
+            }
+        }catch (SQLException err){
+            err.printStackTrace();
+        }
         return false;
     }
 
@@ -59,13 +68,23 @@ public class MySql implements ICurrency{
     }
 
     @Override
-    public double getBalance(Player pplayer) {
-        return 0;
+    public double getBalance(Player player) {
+        return this.getBalance(player.getName());
     }
 
     @Override
     public double getBalance(String playerName) {
-        return 0;
+        try{
+            statement = connection.createStatement();
+            String sql = "SELECT * FROM currency WHERE playerName like '"+playerName+"'";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                return resultSet.getDouble("currency");
+            }
+        }catch (SQLException err){
+            err.printStackTrace();;
+        }
+        return -1;
     }
 
     @Override
@@ -74,23 +93,27 @@ public class MySql implements ICurrency{
     }
 
     @Override
-    public boolean playerExits(String uuid) {
-        return false;
-    }
-
-    @Override
-    public boolean playerExits(Player player) {
+    public boolean playerExits(String playerName) {
         try{
             statement = connection.createStatement();
-            String sql = "SELECT * FROM currency WHERE playerName LIKE "+player.getName()+";";
-            int count = statement.executeUpdate(sql);
-            if(count > 0){
+            String sql = "SELECT * FROM currency WHERE playerName LIKE '"+playerName+"';";
+            ResultSet resultSet =  statement.executeQuery(sql);
+            int rowCount = 0;
+            while (resultSet.next()) {
+                rowCount++;
+            }
+            if(rowCount == 1){
                 return true;
             }
         }catch (SQLException err){
             err.printStackTrace();;
         }
         return false;
+    }
+
+    @Override
+    public boolean playerExits(Player player) {
+       return  this.playerExits(player.getName());
     }
 
     @Override

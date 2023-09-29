@@ -17,19 +17,41 @@ public class CCurrency_player implements CommandExecutor {
                 sender.sendMessage(Utils.CHAT_PREFIX+" §cMissing args...");
                 return false;
             }
-            //testing player is online
-            Player target;
-            try{
-                target = Bukkit.getPlayer(args[1]);
-                //require for test player is online
-                target.getInventory();
-            }catch (Exception err){
-                err.printStackTrace();
-                sender.sendMessage(Utils.CHAT_PREFIX+" §cPlayer not found!");
+
+            //player is validated here
+            double playerBalance = CurrencyPlugin.getMysqlDataHandler().getBalance(args[1]);
+            if(playerBalance != -1){
+                sender.sendMessage(Utils.CHAT_PREFIX+" §e"+args[1]+"'s balance: "+playerBalance+" § §b"+Utils.CurrencyName);
+            } else {
+                sender.sendMessage(Utils.CHAT_PREFIX+" §cPlayer does not exits!");
+            }
+        } else if(args[0].equalsIgnoreCase("setcurrency")){
+            if(args.length != 3){
+                sender.sendMessage(Utils.CHAT_PREFIX+" §cMissing args...");
                 return false;
             }
-            //player is validated here
-            sender.sendMessage(Utils.CHAT_PREFIX+" §e"+args[1]+"'s balance § §b"+Utils.CurrencyName);
+            double amount = 0;
+
+            if(!CurrencyPlugin.getMysqlDataHandler().playerExits(args[1])){
+                sender.sendMessage(Utils.CHAT_PREFIX+" §cPlayer does not exits!");
+                return true;
+            }
+            try{
+                amount = Double.parseDouble(args[2]);
+            }catch (NumberFormatException err){
+                sender.sendMessage(Utils.CHAT_PREFIX+" §cAmount is not a number!");
+                return  true;
+            }
+            if(amount < 0){
+                sender.sendMessage(Utils.CHAT_PREFIX+" §cAmount cannot be lower than zero");
+                return false;
+            }
+            if( CurrencyPlugin.getMysqlDataHandler().DepositPlayer(args[1], amount)){
+                sender.sendMessage(Utils.CHAT_PREFIX+" §aSuccess!");
+            } else {
+                sender.sendMessage(Utils.CHAT_PREFIX+" §c Error while set currency!");
+            }
+
 
         }
         return false;

@@ -11,11 +11,12 @@ public interface ICurrency {
     boolean WithdrawPlayer(Player player, double amount);
     boolean DepositPlayer(String playerName, double amount);
     boolean WithdrawPlayer(String playerName, double amount);
-    double getBalance(Player pplayer);
+    double getBalance(Player player);
     double getBalance(String playerName);
     boolean playerExits(UUID uuid);
-    boolean playerExits(String uuid);
+
     boolean playerExits(Player player);
+    boolean playerExits(String playerName);
     Connection getConnetion();
 
     boolean registerPlayer(Player player);
