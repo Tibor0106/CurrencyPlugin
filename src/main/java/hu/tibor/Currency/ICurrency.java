@@ -17,4 +17,6 @@ public interface ICurrency {
     boolean playerExits(String uuid);
     boolean playerExits(Player player);
     Connection getConnetion();
+
+    boolean registerPlayer(Player player);
 }

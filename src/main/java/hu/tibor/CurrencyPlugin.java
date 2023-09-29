@@ -1,6 +1,7 @@
 package hu.tibor;
 
 import hu.tibor.Commands.CCurrency_player;
+import hu.tibor.Listeners.PlayerJoin;
 import hu.tibor.MySql.Database;
 import hu.tibor.MySql.MySql;
 import hu.tibor.Utils.Utils;
@@ -29,6 +30,9 @@ public final class CurrencyPlugin extends JavaPlugin {
 
         //commands
         getServer().getPluginCommand("currency-player").setExecutor(new CCurrency_player());
+
+        //evets
+        PlayerJoin playerJoin = new PlayerJoin(this);
     }
     @Override
     public void onDisable() {

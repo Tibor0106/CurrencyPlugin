@@ -8,10 +8,12 @@ import org.bukkit.plugin.Plugin;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.UUID;
 
 public class MySql implements ICurrency{
     private boolean isEnabled;
+    private Statement statement;
     private Connection connection;
     private Database database;
     private Plugin plugin;
@@ -25,6 +27,12 @@ public class MySql implements ICurrency{
         if(database.Connect()){
             Bukkit.getLogger().info(plugin.getName()+" §aDatabase connected!");
             connection = database.getConnection();
+            try{
+                this.statement = connection.createStatement();
+            }catch (SQLException err){
+                err.printStackTrace();
+                return;
+            }
         } else {
             Bukkit.getLogger().severe(plugin.getName()+" §cError while connecting database!");
         }
@@ -72,12 +80,38 @@ public class MySql implements ICurrency{
 
     @Override
     public boolean playerExits(Player player) {
+        try{
+            statement = connection.createStatement();
+            String sql = "SELECT * FROM currency WHERE playerName LIKE "+player.getName()+";";
+            int count = statement.executeUpdate(sql);
+            if(count > 0){
+                return true;
+            }
+        }catch (SQLException err){
+            err.printStackTrace();;
+        }
         return false;
     }
 
     @Override
     public Connection getConnetion() {
         return connection;
+    }
+
+    @Override
+    public boolean registerPlayer(Player player) {
+        if(this.playerExits(player)){
+            return false;
+        }
+        try{
+            statement = connection.createStatement();
+            String sql = "INSERT INTO currency (`playerUUID`, `playerName`, `currency`) VALUES ('"+player.getUniqueId().toString()+"', '"+player.getName()+"', 0)";
+            return statement.execute(sql);
+
+        }catch (SQLException err){
+            err.printStackTrace();
+        }
+        return false;
     }
 
 
